@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<maven2-moduleset>
+  <actions></actions>
+  <description></description>
+  <logRotator>
+    <daysToKeep>5</daysToKeep>
+    <numToKeep>5</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <permission>hudson.model.Item.Build:bbhav</permission>
+      <permission>hudson.model.Item.Release:fgeorge</permission>
+      <permission>hudson.model.Item.Release:bfonke</permission>
+      <permission>hudson.model.Item.Release:rbeanis</permission>
+      <permission>hudson.model.Item.Release:qfranks</permission>
+      <permission>hudson.model.Item.Release:spuma</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+  </properties>
+  <scm class="hudson.plugins.mercurial.MercurialSCM">
+    <source>ssh://hg/act</source>
+    <modules></modules>
+    <clean>true</clean>
+    <forest>false</forest>
+  </scm>
+  <assignedNode>unix</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <jdk>jdk5</jdk>
+  <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>* * * * *</spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <rootModule>
+    <groupId>com.fred.acs</groupId>
+    <artifactId>acs</artifactId>
+  </rootModule>
+  <goals>clean deploy</goals>
+  <mavenOpts>-Xmx512m -XX:MaxPermSize=128m -Djavax.net.ssl.trustStore=$HOME/.m2/trust.jks -Djavax.net.ssl.trustStorePassword=changeit</mavenOpts>
+  <aggregatorStyleBuild>true</aggregatorStyleBuild>
+  <incrementalBuild>false</incrementalBuild>
+  <usePrivateRepository>false</usePrivateRepository>
+  <ignoreUpstremChanges>false</ignoreUpstremChanges>
+  <archivingDisabled>true</archivingDisabled>
+  <reporters>
+    <hudson.maven.reporters.MavenMailer>
+      <recipients>jenkins@jenkins.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>true</sendToIndividuals>
+    </hudson.maven.reporters.MavenMailer>
+  </reporters>
+  <publishers></publishers>
+  <buildWrappers>
+    <org.jvnet.hudson.plugins.m2release.M2ReleaseBuildWrapper>
+      <releaseGoals>-Dresume=false release:prepare release:perform</releaseGoals>
+    </org.jvnet.hudson.plugins.m2release.M2ReleaseBuildWrapper>
+  </buildWrappers>
+</maven2-moduleset>
